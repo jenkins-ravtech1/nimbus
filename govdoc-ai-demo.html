@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GovDoc AI Israel - פלטפורמת עיבוד מסמכים חכמה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004999;
+            --secondary: #00a86b;
+            --warning: #ff9800;
+            --danger: #e53935;
+            --success: #4caf50;
+            --bg-dark: #1a1a2e;
+            --bg-card: #16213e;
+            --text-light: #e4e4e4;
+            --text-muted: #a0a0a0;
+            --border-color: #2a2a4a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0f0f23 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: rgba(0, 102, 204, 0.2);
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .badge.green {
+            background: rgba(0, 168, 107, 0.2);
+            border-color: var(--secondary);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon.blue { background: rgba(0, 102, 204, 0.2); }
+        .stat-icon.green { background: rgba(0, 168, 107, 0.2); }
+        .stat-icon.orange { background: rgba(255, 152, 0, 0.2); }
+        .stat-icon.red { background: rgba(229, 57, 53, 0.2); }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* Upload Zone */
+        .upload-section {
+            margin-bottom: 3rem;
+        }
+
+        .upload-zone {
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-hint {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .supported-formats {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .format-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* Processing Demo */
+        .demo-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 968px) {
+            .demo-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .demo-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .demo-body {
+            padding: 1.5rem;
+        }
+
+        /* Document Preview */
+        .document-preview {
+            background: #fff;
+            color: #333;
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: 'David Libre', serif;
+            direction: rtl;
+            min-height: 300px;
+        }
+
+        .doc-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .doc-header h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-field {
+            display: flex;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+
+        .doc-label {
+            width: 120px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .doc-value {
+            flex: 1;
+            border-bottom: 1px solid #999;
+            padding: 0.25rem;
+            min-height: 1.5rem;
+        }
+
+        .doc-value.highlighted {
+            background: rgba(0, 102, 204, 0.2);
+            border-color: var(--primary);
+        }
+
+        .doc-value.redacted {
+            background: #333;
+            color: #333;
+            user-select: none;
+        }
+
+        /* Extracted Data */
+        .extracted-data {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            direction: ltr;
+        }
+
+        .json-viewer {
+            background: #1e1e3f;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .json-key { color: #9cdcfe; }
+        .json-string { color: #ce9178; }
+        .json-number { color: #b5cea8; }
+        .json-boolean { color: #569cd6; }
+        .json-bracket { color: #ffd700; }
+
+        /* OCR Processing Animation */
+        .processing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 168, 107, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .processing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Language Detection */
+        .language-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .lang-tag {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .lang-tag.he { background: rgba(0, 102, 204, 0.3); }
+        .lang-tag.ar { background: rgba(0, 168, 107, 0.3); }
+        .lang-tag.en { background: rgba(255, 152, 0, 0.3); }
+
+        /* PII Detection */
+        .pii-section {
+            margin-bottom: 3rem;
+        }
+
+        .pii-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .pii-item {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pii-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pii-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(229, 57, 53, 0.2);
+        }
+
+        .pii-type {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .pii-value {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .pii-action {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c62828;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Features Grid */
+        .features-section {
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .feature-tag.mvp {
+            background: rgba(0, 168, 107, 0.2);
+            color: var(--secondary);
+        }
+
+        .feature-tag.future {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning);
+        }
+
+        /* Security Section */
+        .security-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .security-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .security-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .security-item h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .security-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Export Options */
+        .export-section {
+            margin-bottom: 3rem;
+        }
+
+        .export-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .export-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .export-btn .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Access Log */
+        .access-log {
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .log-header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .log-entries {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .log-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .log-action {
+            font-weight: 500;
+        }
+
+        .log-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .log-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.95rem;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: var(--text-light);
+        }
+
+        .tab.active {
+            background: var(--bg-card);
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--bg-card);
+            margin-bottom: -1px;
+        }
+
+        /* Compliance */
+        .compliance-section {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.2), rgba(0, 168, 107, 0.2));
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .compliance-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .compliance-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .check-icon {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Interactive Elements */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--success);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">📄</div>
+                <div class="logo-text">GovDoc <span>AI</span></div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard">דשבורד</a></li>
+                    <li><a href="#upload">העלאת מסמכים</a></li>
+                    <li><a href="#features">יכולות</a></li>
+                    <li><a href="#security">אבטחה</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>פלטפורמת בינה מלאכותית לעיבוד מסמכים ממשלתיים</h1>
+        <p>עיבוד חכם של מסמכים בעברית, ערבית ואנגלית — מותאם לטפסים ממשלתיים ישראליים, עם עמידה מלאה בדרישות תיקון 13 לחוק הגנת הפרטיות</p>
+        <div class="badges">
+            <span class="badge">🇮🇱 נתונים בישראל בלבד</span>
+            <span class="badge green">✓ תיקון 13 — תאימות מלאה</span>
+            <span class="badge">🔒 הצפנה מקצה לקצה</span>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Dashboard Stats -->
+        <section id="dashboard" class="fade-in">
+            <h2 class="section-title">דשבורד — סטטיסטיקות עיבוד</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">📄</div>
+                    <div class="stat-value">12,847</div>
+                    <div class="stat-label">מסמכים עובדו החודש</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">✓</div>
+                    <div class="stat-value">98.7%</div>
+                    <div class="stat-label">אחוז דיוק זיהוי</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">⚡</div>
+                    <div class="stat-value">15 שניות</div>
+                    <div class="stat-label">זמן עיבוד ממוצע</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">🔒</div>
+                    <div class="stat-value">4,231</div>
+                    <div class="stat-label">פרטים רגישים הושחרו</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section id="upload" class="upload-section fade-in">
+            <h2 class="section-title">העלאת מסמכים</h2>
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📤</div>
+                <div class="upload-text">גררו מסמכים לכאן או לחצו לבחירה</div>
+                <div class="upload-hint">תמיכה בהעלאה מרובה של מסמכים</div>
+                <div class="supported-formats">
+                    <span class="format-tag">PDF</span>
+                    <span class="format-tag">JPG</span>
+                    <span class="format-tag">PNG</span>
+                    <span class="format-tag">TIFF</span>
+                </div>
+            </div>
+            <input type="file" id="fileInput" hidden multiple accept=".pdf,.jpg,.jpeg,.png,.tiff">
+        </section>
+
+        <!-- Processing Demo -->
+        <section class="demo-section fade-in">
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>📄 מסמך מקורי — טופס 101</h3>
+                    <div class="processing-indicator">
+                        <span class="processing-dot"></span>
+                        <span>מעבד...</span>
+                    </div>
+                </div>
+                <div class="demo-body">
+                    <div class="document-preview">
+                        <div class="doc-header">
+                            <h4>טופס 101</h4>
+                            <div>כרטיס עובד</div>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">שם משפחה:</span>
+                            <span class="doc-value highlighted" id="lastName">כהן</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">שם פרטי:</span>
+                            <span class="doc-value highlighted" id="firstName">דוד</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">תעודת זהות:</span>
+                            <span class="doc-value highlighted" id="idNumber">123456789</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">תאריך לידה:</span>
+                            <span class="doc-value highlighted">15/03/1985</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">כתובת:</span>
+                            <span class="doc-value highlighted">רחוב הרצל 10, תל אביב</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">טלפון:</span>
+                            <span class="doc-value highlighted">052-1234567</span>
+                        </div>
+                        <div class="doc-field">
+                            <span class="doc-label">מצב משפחתי:</span>
+                            <span class="doc-value highlighted">נשוי</span>
+                        </div>
+                    </div>
+                    <div class="language-tags">
+                        <span class="lang-tag he">עברית 95%</span>
+                        <span class="lang-tag en">אנגלית 5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <div class="demo-header">
+                    <h3>📊 נתונים מחולצים — JSON</h3>
+                    <button class="btn btn-outline" onclick="copyJSON()">📋 העתק</button>
+                </div>
+                <div class="demo-body">
+                    <div class="extracted-data">
+                        <div class="json-viewer">
+<pre><span class="json-bracket">{</span>
+  <span class="json-key">"form_type"</span>: <span class="json-string">"101"</span>,
+  <span class="json-key">"extraction_date"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+  <span class="json-key">"confidence_score"</span>: <span class="json-number">0.987</span>,
+  <span class="json-key">"data"</span>: <span class="json-bracket">{</span>
+    <span class="json-key">"שם_משפחה"</span>: <span class="json-string">"כהן"</span>,
+    <span class="json-key">"שם_פרטי"</span>: <span class="json-string">"דוד"</span>,
+    <span class="json-key">"תעודת_זהות"</span>: <span class="json-string">"123456789"</span>,
+    <span class="json-key">"תאריך_לידה"</span>: <span class="json-string">"1985-03-15"</span>,
+    <span class="json-key">"כתובת"</span>: <span class="json-bracket">{</span>
+      <span class="json-key">"רחוב"</span>: <span class="json-string">"הרצל"</span>,
+      <span class="json-key">"מספר"</span>: <span class="json-number">10</span>,
+      <span class="json-key">"עיר"</span>: <span class="json-string">"תל אביב"</span>
+    <span class="json-bracket">}</span>,
+    <span class="json-key">"טלפון"</span>: <span class="json-string">"052-1234567"</span>,
+    <span class="json-key">"מצב_משפחתי"</span>: <span class="json-string">"נשוי"</span>
+  <span class="json-bracket">}</span>,
+  <span class="json-key">"validation"</span>: <span class="json-bracket">{</span>
+    <span class="json-key">"id_valid"</span>: <span class="json-boolean">true</span>,
+    <span class="json-key">"date_valid"</span>: <span class="json-boolean">true</span>,
+    <span class="json-key">"phone_valid"</span>: <span class="json-boolean">true</span>
+  <span class="json-bracket">}</span>
+<span class="json-bracket">}</span></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PII Detection Section -->
+        <section class="pii-section fade-in">
+            <h2 class="section-title">זיהוי מידע רגיש (PII) והשחרה</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">המערכת זיהתה את הפרטים הרגישים הבאים במסמך. ניתן להשחיר אותם לפני שיתוף או אחסון.</p>
+
+            <div class="pii-list">
+                <div class="pii-item">
+                    <div class="pii-info">
+                        <div class="pii-icon">🪪</div>
+                        <div>
+                            <div class="pii-type">תעודת זהות</div>
+                            <div class="pii-value">123456789</div>
+                        </div>
+                    </div>
+                    <div class="pii-action">
+                        <button class="btn btn-danger" onclick="redactField('idNumber')">השחר</button>
+                    </div>
+                </div>
+                <div class="pii-item">
+                    <div class="pii-info">
+                        <div class="pii-icon">👤</div>
+                        <div>
+                            <div class="pii-type">שם מלא</div>
+                            <div class="pii-value">דוד כהן</div>
+                        </div>
+                    </div>
+                    <div class="pii-action">
+                        <button class="btn btn-danger" onclick="redactField('firstName'); redactField('lastName')">השחר</button>
+                    </div>
+                </div>
+                <div class="pii-item">
+                    <div class="pii-info">
+                        <div class="pii-icon">📍</div>
+                        <div>
+                            <div class="pii-type">כתובת</div>
+                            <div class="pii-value">רחוב הרצל 10, תל אביב</div>
+                        </div>
+                    </div>
+                    <div class="pii-action">
+                        <button class="btn btn-danger">השחר</button>
+                    </div>
+                </div>
+                <div class="pii-item">
+                    <div class="pii-info">
+                        <div class="pii-icon">📱</div>
+                        <div>
+                            <div class="pii-type">מספר טלפון</div>
+                            <div class="pii-value">052-1234567</div>
+                        </div>
+                    </div>
+                    <div class="pii-action">
+                        <button class="btn btn-danger">השחר</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button class="btn btn-danger" onclick="redactAll()">🔒 השחר הכל</button>
+                <button class="btn btn-outline" onclick="resetRedaction()">↩️ בטל השחרה</button>
+            </div>
+        </section>
+
+        <!-- Export Section -->
+        <section class="export-section fade-in">
+            <h2 class="section-title">ייצוא נתונים</h2>
+            <div class="export-options">
+                <div class="export-btn">
+                    <span class="icon">📊</span>
+                    <div>
+                        <div style="font-weight: 600;">Excel</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">.xlsx</div>
+                    </div>
+                </div>
+                <div class="export-btn">
+                    <span class="icon">📋</span>
+                    <div>
+                        <div style="font-weight: 600;">CSV</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">.csv</div>
+                    </div>
+                </div>
+                <div class="export-btn">
+                    <span class="icon">{ }</span>
+                    <div>
+                        <div style="font-weight: 600;">JSON</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">.json</div>
+                    </div>
+                </div>
+                <div class="export-btn">
+                    <span class="icon">📄</span>
+                    <div>
+                        <div style="font-weight: 600;">PDF</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">מסמך מושחר</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Access Log -->
+        <section class="fade-in">
+            <h2 class="section-title">תיעוד גישה למסמכים</h2>
+            <div class="access-log">
+                <div class="log-header">
+                    <span>📜 היסטוריית פעולות — מסמך #12847</span>
+                </div>
+                <div class="log-entries">
+                    <div class="log-entry">
+                        <div class="log-info">
+                            <div class="log-avatar">יכ</div>
+                            <div>
+                                <div class="log-action">יעל כהן — צפייה במסמך</div>
+                                <div class="log-details">מחלקת מיסוי • IP: 192.168.1.XXX</div>
+                            </div>
+                        </div>
+                        <div class="log-time">היום, 14:32</div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-info">
+                            <div class="log-avatar">מל</div>
+                            <div>
+                                <div class="log-action">משה לוי — עריכת נתונים</div>
+                                <div class="log-details">מחלקת קליטה • IP: 192.168.1.XXX</div>
+                            </div>
+                        </div>
+                        <div class="log-time">היום, 11:15</div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-info">
+                            <div class="log-avatar">🤖</div>
+                            <div>
+                                <div class="log-action">מערכת — עיבוד OCR הושלם</div>
+                                <div class="log-details">דיוק: 98.7% • שפות: עברית, אנגלית</div>
+                            </div>
+                        </div>
+                        <div class="log-time">היום, 10:30</div>
+                    </div>
+                    <div class="log-entry">
+                        <div class="log-info">
+                            <div class="log-avatar">שב</div>
+                            <div>
+                                <div class="log-action">שרה ברקוביץ — העלאת מסמך</div>
+                                <div class="log-details">דלפק קבלה • IP: 192.168.1.XXX</div>
+                            </div>
+                        </div>
+                        <div class="log-time">היום, 10:28</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features-section fade-in">
+            <h2 class="section-title">יכולות המוצר</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>זיהוי טקסט מודפס (OCR)</h3>
+                    <p>זיהוי טקסט בעברית, ערבית ואנגלית עם דיוק של 98%+ מכל סוגי המסמכים — PDF, תמונות וסריקות באיכויות שונות.</p>
+                    <span class="feature-tag mvp">✓ MVP</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>חילוץ נתונים מתקדם</h3>
+                    <p>הבנה חכמה של תוכן המסמך — זיהוי אוטומטי של שדות, הבנת הקשרים, ווידוא תקינות הנתונים.</p>
+                    <span class="feature-tag mvp">✓ MVP</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>זיהוי PII והשחרה</h3>
+                    <p>זיהוי אוטומטי של מידע רגיש — ת.ז., כתובות, מידע רפואי — עם יכולת השחרה לפני שיתוף או אחסון.</p>
+                    <span class="feature-tag mvp">✓ MVP</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>דשבורד ובקרה</h3>
+                    <p>מעקב בזמן אמת אחר סטטוס עיבוד, סטטיסטיקות, זיהוי מסמכים שדורשים התערבות ידנית, וייצוא דוחות.</p>
+                    <span class="feature-tag mvp">✓ MVP</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✍️</div>
+                    <h3>זיהוי כתב יד בעברית</h3>
+                    <p>יכולת ייחודית לזיהוי כתב יד בעברית — שדות קצרים, הערות וחתימות. רמת דיוק יעד: 85-95%.</p>
+                    <span class="feature-tag future">🔜 פיתוח עתידי</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>אינטגרציה למערכות</h3>
+                    <p>חיבור למערכות ממשלתיות כמו מרכבה — קבלת מסמכים והחזרת נתונים מובנים באופן אוטומטי.</p>
+                    <span class="feature-tag future">🔜 פיתוח עתידי</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h3>עיבוד כמויות גדולות</h3>
+                    <p>עיבוד אלפי מסמכים בבת אחת לדיגיטציה של ארכיונים — עם עיבוד מקבילי מותאם.</p>
+                    <span class="feature-tag future">🔜 פיתוח עתידי</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>גישה דרך API</h3>
+                    <p>API מתועד לצוותי פיתוח — שליחת מסמך וקבלת תוצאות מובנות, עם תיעוד בעברית ואנגלית.</p>
+                    <span class="feature-tag future">🔜 פיתוח עתידי</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section id="security" class="security-section fade-in">
+            <h2 class="section-title">אבטחה ושמירת נתונים</h2>
+            <p style="color: var(--text-muted);">דרישת סף לעבודה עם גופים ממשלתיים — כל הנתונים נשמרים בישראל בלבד</p>
+            <div class="security-grid">
+                <div class="security-item">
+                    <div class="icon">🇮🇱</div>
+                    <h4>נתונים בישראל</h4>
+                    <p>שמירה בתשתית פרויקט נימבוס — מיקום בישראל בלבד</p>
+                </div>
+                <div class="security-item">
+                    <div class="icon">🔐</div>
+                    <h4>הצפנה מלאה</h4>
+                    <p>TLS בתעבורה + AES-256 באחסון</p>
+                </div>
+                <div class="security-item">
+                    <div class="icon">💾</div>
+                    <h4>גיבוי אוטומטי</h4>
+                    <p>גיבוי יומי עם יכולת שחזור מלאה</p>
+                </div>
+                <div class="security-item">
+                    <div class="icon">✅</div>
+                    <h4>תקנים ממשלתיים</h4>
+                    <p>עמידה בדרישות אבטחת מידע ממשלתיות</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compliance Section -->
+        <section class="compliance-section fade-in">
+            <h2 class="section-title">עמידה בתיקון 13 לחוק הגנת הפרטיות</h2>
+            <p style="color: var(--text-muted);">התיקון נכנס לתוקף באוגוסט 2025 — גופים שלא יעמדו בדרישות צפויים לקנסות של עד ₪100,000 לכל אדם שנפגע</p>
+            <div class="compliance-list">
+                <div class="compliance-item">
+                    <span class="check-icon">✓</span>
+                    <span>זיהוי מידע אישי (PII)</span>
+                </div>
+                <div class="compliance-item">
+                    <span class="check-icon">✓</span>
+                    <span>יכולת מחיקה והשחרה</span>
+                </div>
+                <div class="compliance-item">
+                    <span class="check-icon">✓</span>
+                    <span>תיעוד גישה מלא</span>
+                </div>
+                <div class="compliance-item">
+                    <span class="check-icon">✓</span>
+                    <span>שליטה בהרשאות</span>
+                </div>
+                <div class="compliance-item">
+                    <span class="check-icon">✓</span>
+                    <span>אחסון מאובטח</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supported Forms -->
+        <section class="fade-in" style="margin-bottom: 3rem;">
+            <h2 class="section-title">טפסים ממשלתיים נתמכים</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">🏛️</div>
+                    <div class="stat-value">רשות המסים</div>
+                    <div class="stat-label">טופס 101, 106, 867, דוחות שנתיים</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">🏥</div>
+                    <div class="stat-value">ביטוח לאומי</div>
+                    <div class="stat-label">תביעות, אישורים רפואיים</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">🪪</div>
+                    <div class="stat-value">משרד הפנים</div>
+                    <div class="stat-label">בקשות ת.ז., דרכונים, רישיונות</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">⚖️</div>
+                    <div class="stat-value">בתי משפט</div>
+                    <div class="stat-label">כתבי טענות, פסקי דין, פרוטוקולים</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI Calculator -->
+        <section class="fade-in" style="background: var(--bg-card); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; border: 1px solid var(--border-color);">
+            <h2 class="section-title">חיסכון צפוי</h2>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">זמן עיבוד למסמך</div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                        <div>
+                            <div style="font-size: 1.5rem; color: var(--danger);">15-30 דק׳</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">לפני</div>
+                        </div>
+                        <div style="font-size: 1.5rem;">→</div>
+                        <div>
+                            <div style="font-size: 1.5rem; color: var(--success);">15 שניות</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">אחרי</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">שגיאות הקלדה</div>
+                    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                        <div>
+                            <div style="font-size: 1.5rem; color: var(--danger);">5-15%</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">לפני</div>
+                        </div>
+                        <div style="font-size: 1.5rem;">→</div>
+                        <div>
+                            <div style="font-size: 1.5rem; color: var(--success);">&lt;1%</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">אחרי</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">חיסכון שנתי (גוף בינוני)</div>
+                    <div style="font-size: 2.5rem; color: var(--success); font-weight: 700;">₪7M+</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 GovDoc AI Israel — פלטפורמת בינה מלאכותית לעיבוד מסמכים ממשלתיים</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">🇮🇱 מוצר ישראלי • נתונים בישראל בלבד • תמיכה בעברית</p>
+    </footer>
+
+    <script>
+        // Upload Zone Functionality
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                alert(`נבחרו ${files.length} קבצים לעיבוד!\n\n(הדגמה בלבד — בגרסה האמיתית המסמכים יועלו לעיבוד)`);
+            }
+        }
+
+        // Redaction Functions
+        function redactField(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.classList.add('redacted');
+                field.textContent = '████████';
+            }
+        }
+
+        function redactAll() {
+            const fields = document.querySelectorAll('.doc-value');
+            fields.forEach(field => {
+                field.classList.add('redacted');
+                field.setAttribute('data-original', field.textContent);
+                field.textContent = '████████';
+            });
+        }
+
+        function resetRedaction() {
+            document.getElementById('lastName').textContent = 'כהן';
+            document.getElementById('lastName').classList.remove('redacted');
+
+            document.getElementById('firstName').textContent = 'דוד';
+            document.getElementById('firstName').classList.remove('redacted');
+
+            document.getElementById('idNumber').textContent = '123456789';
+            document.getElementById('idNumber').classList.remove('redacted');
+
+            const fields = document.querySelectorAll('.doc-value');
+            fields.forEach(field => {
+                field.classList.remove('redacted');
+            });
+        }
+
+        // Copy JSON Function
+        function copyJSON() {
+            const jsonText = `{
+  "form_type": "101",
+  "extraction_date": "2024-01-15T10:30:00Z",
+  "confidence_score": 0.987,
+  "data": {
+    "שם_משפחה": "כהן",
+    "שם_פרטי": "דוד",
+    "תעודת_זהות": "123456789",
+    "תאריך_לידה": "1985-03-15",
+    "כתובת": {
+      "רחוב": "הרצל",
+      "מספר": 10,
+      "עיר": "תל אביב"
+    },
+    "טלפון": "052-1234567",
+    "מצב_משפחתי": "נשוי"
+  },
+  "validation": {
+    "id_valid": true,
+    "date_valid": true,
+    "phone_valid": true
+  }
+}`;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                alert('הנתונים הועתקו ללוח!');
+            });
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Simulate real-time processing indicator
+        setInterval(() => {
+            const dot = document.querySelector('.processing-dot');
+            if (dot) {
+                dot.style.background = dot.style.background === 'rgb(0, 168, 107)' ? '#4caf50' : 'rgb(0, 168, 107)';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
