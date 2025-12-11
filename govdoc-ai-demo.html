@@ -963,19 +963,19 @@
                         </div>
                         <div class="doc-field">
                             <span class="doc-label">תאריך לידה:</span>
-                            <span class="doc-value highlighted">15/03/1985</span>
+                            <span class="doc-value highlighted" id="birthDate">15/03/1985</span>
                         </div>
                         <div class="doc-field">
                             <span class="doc-label">כתובת:</span>
-                            <span class="doc-value highlighted">רחוב הרצל 10, תל אביב</span>
+                            <span class="doc-value highlighted" id="address">רחוב הרצל 10, תל אביב</span>
                         </div>
                         <div class="doc-field">
                             <span class="doc-label">טלפון:</span>
-                            <span class="doc-value highlighted">052-1234567</span>
+                            <span class="doc-value highlighted" id="phone">052-1234567</span>
                         </div>
                         <div class="doc-field">
                             <span class="doc-label">מצב משפחתי:</span>
-                            <span class="doc-value highlighted">נשוי</span>
+                            <span class="doc-value highlighted" id="maritalStatus">נשוי</span>
                         </div>
                     </div>
                     <div class="language-tags">
@@ -1061,7 +1061,7 @@
                         </div>
                     </div>
                     <div class="pii-action">
-                        <button class="btn btn-danger">השחר</button>
+                        <button class="btn btn-danger" onclick="redactField('address')">השחר</button>
                     </div>
                 </div>
                 <div class="pii-item">
@@ -1073,7 +1073,7 @@
                         </div>
                     </div>
                     <div class="pii-action">
-                        <button class="btn btn-danger">השחר</button>
+                        <button class="btn btn-danger" onclick="redactField('phone')">השחר</button>
                     </div>
                 </div>
             </div>
@@ -1407,19 +1407,23 @@
         }
 
         function resetRedaction() {
-            document.getElementById('lastName').textContent = 'כהן';
-            document.getElementById('lastName').classList.remove('redacted');
+            const originalValues = {
+                'lastName': 'כהן',
+                'firstName': 'דוד',
+                'idNumber': '123456789',
+                'birthDate': '15/03/1985',
+                'address': 'רחוב הרצל 10, תל אביב',
+                'phone': '052-1234567',
+                'maritalStatus': 'נשוי'
+            };
 
-            document.getElementById('firstName').textContent = 'דוד';
-            document.getElementById('firstName').classList.remove('redacted');
-
-            document.getElementById('idNumber').textContent = '123456789';
-            document.getElementById('idNumber').classList.remove('redacted');
-
-            const fields = document.querySelectorAll('.doc-value');
-            fields.forEach(field => {
-                field.classList.remove('redacted');
-            });
+            for (const [id, value] of Object.entries(originalValues)) {
+                const field = document.getElementById(id);
+                if (field) {
+                    field.textContent = value;
+                    field.classList.remove('redacted');
+                }
+            }
         }
 
         // Copy JSON Function
