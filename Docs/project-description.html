@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GovDoc AI Israel - מסמך איפיון מוצר</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --success-color: #22c55e;
+            --accent-color: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        h3 {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+        }
+
+        h4 {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f1f5f9;
+        }
+
+        .mermaid {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            direction: ltr;
+        }
+
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-right: 25px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        blockquote {
+            border-right: 4px solid var(--primary-color);
+            padding: 10px 20px;
+            margin: 15px 0;
+            background: #eff6ff;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fef3c7 0%, #fef3c7 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-mvp {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .badge-future {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .check-icon {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--border-color);
+            margin: 40px 0;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-right: 4px solid #f59e0b;
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>GovDoc AI Israel</h1>
+        <h2>פלטפורמת בינה מלאכותית לעיבוד מסמכים ממשלתיים</h2>
+    </header>
+
+    <div class="container">
+        <!-- Section 1: The Idea -->
+        <section>
+            <h2>1. הרעיון</h2>
+            <p><strong>GovDoc AI Israel</strong> היא פלטפורמה לעיבוד מסמכים חכם, שנבנית במיוחד עבור גופים ממשלתיים בישראל.</p>
+
+            <h3>מה המוצר עושה?</h3>
+            <p>הפלטפורמה מקבלת מסמכים (סרוקים, PDF, תמונות) ומבצעת:</p>
+
+            <div class="mermaid">
+                flowchart TB
+                    A[📄 קליטת מסמך] --> B[🔍 זיהוי טקסט עברית, ערבית, אנגלית]
+                    B --> C[🧠 חילוץ נתונים חכם<br/>הבנת תוכן הטופס]
+                    C --> D[🔒 זיהוי מידע רגיש PII + השחרה אוטומטית]
+                    D --> E[📊 פלט מובנה מוכן לשימוש במערכות ממשלתיות]
+            </div>
+
+            <h3>למי המוצר מיועד?</h3>
+            <ul>
+                <li>משרדי ממשלה (מס הכנסה, ביטוח לאומי, משרד הפנים)</li>
+                <li>רשויות מקומיות</li>
+                <li>גופים ציבוריים וסטטוטוריים</li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <!-- Section 2: The Problem -->
+        <section>
+            <h2>2. הבעיה</h2>
+
+            <h3>המצב הקיים בגופים ממשלתיים</h3>
+            <p><strong>מיליוני מסמכים מעובדים ידנית כל שנה:</strong></p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>גוף</th>
+                        <th>סוגי מסמכים</th>
+                        <th>היקף שנתי משוער</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>רשות המסים</td>
+                        <td>טפסי מס, דוחות, אישורים</td>
+                        <td>10+ מיליון</td>
+                    </tr>
+                    <tr>
+                        <td>ביטוח לאומי</td>
+                        <td>תביעות, אישורים רפואיים</td>
+                        <td>5+ מיליון</td>
+                    </tr>
+                    <tr>
+                        <td>משרד הפנים</td>
+                        <td>בקשות לת.ז., דרכונים, רישיונות</td>
+                        <td>3+ מיליון</td>
+                    </tr>
+                    <tr>
+                        <td>בתי משפט</td>
+                        <td>כתבי טענות, פסקי דין, פרוטוקולים</td>
+                        <td>2+ מיליון</td>
+                    </tr>
+                    <tr>
+                        <td>רשויות מקומיות</td>
+                        <td>היתרי בנייה, רישיונות עסק, פניות אזרחים</td>
+                        <td>5+ מיליון</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>התוצאה:</h4>
+            <ul>
+                <li>עובדים מקלידים ידנית נתונים מטפסים למערכות</li>
+                <li>שיעור שגיאות גבוה בהקלדה</li>
+                <li>צווארי בקבוק בתקופות עומס</li>
+                <li>אזרחים מחכים שבועות לטיפול בבקשות</li>
+            </ul>
+
+            <h3>העלות של המצב הקיים</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>סעיף</th>
+                        <th>עלות שנתית משוערת</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>עבודה ידנית של עיבוד מסמכים</td>
+                        <td>₪500M+</td>
+                    </tr>
+                    <tr>
+                        <td>שגיאות ותיקונים</td>
+                        <td>₪50-100M</td>
+                    </tr>
+                    <tr>
+                        <td>עיכובים ואובדן פרודוקטיביות</td>
+                        <td>לא ניתן לכימות</td>
+                    </tr>
+                    <tr>
+                        <td><strong>סה"כ</strong></td>
+                        <td><strong>₪550-600M+</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note">* נצטרך לחקור ולהביא נתונים אמיתיים לצורך מכירה וכו׳</div>
+        </section>
+
+        <hr>
+
+        <!-- Section 3: The Solution -->
+        <section>
+            <h2>3. הפתרון — יכולות המוצר</h2>
+
+            <h3>יכולות ליבה (MVP)</h3>
+
+            <div class="card">
+                <h4>3.1 זיהוי טקסט מודפס (OCR)</h4>
+                <blockquote>היכולת הבסיסית של המוצר</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>שפות נתמכות</td><td>עברית, ערבית, אנגלית</td></tr>
+                    <tr><td>סוגי מסמכים</td><td>טפסים, מכתבים, דוחות, טבלאות, חשבוניות</td></tr>
+                    <tr><td>פורמטים</td><td>PDF, תמונות (JPG, PNG), סריקות</td></tr>
+                    <tr><td>איכות סריקה</td><td>תמיכה בסריקות באיכות נמוכה עד גבוהה</td></tr>
+                    <tr><td>רמת דיוק יעד</td><td>98%+ לטקסט מודפס</td></tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h4>3.2 חילוץ נתונים מתקדם מטפסים</h4>
+                <blockquote>הבנה חכמה של תוכן המסמך</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>זיהוי שדות</td><td>זיהוי אוטומטי של שדות בטופס (שם, ת.ז., כתובת, תאריך)</td></tr>
+                    <tr><td>הבנת תוכן</td><td>הבנה של משמעות השדות והקשר ביניהם</td></tr>
+                    <tr><td>טפסים ישראליים</td><td>התאמה מובנית לטפסי מס הכנסה, ביטוח לאומי, משרד הפנים</td></tr>
+                    <tr><td>וידוא נתונים</td><td>בדיקת תקינות (פורמט ת.ז., תאריכים, מספרי טלפון)</td></tr>
+                    <tr><td>פלט מובנה</td><td>נתונים מובנים (JSON) מוכנים להעברה למערכות</td></tr>
+                </table>
+
+                <h4>דוגמה:</h4>
+                <pre><code>קלט: טופס 101 סרוק
+
+פלט:
+{
+  "שם_פרטי": "ישראל",
+  "שם_משפחה": "ישראלי",
+  "תעודת_זהות": "123456789",
+  "תאריך_לידה": "1985-03-15",
+  "כתובת": "רחוב הרצל 10, תל אביב",
+  "סטטוס_משפחתי": "נשוי",
+  ...
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h4>3.3 יכולות פרטיות והגנת מידע</h4>
+                <blockquote>עמידה בתיקון 13 לחוק הגנת הפרטיות</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>זיהוי PII אוטומטי</td><td>זיהוי מספרי ת.ז., כתובות, מידע רפואי, פרטים פיננסיים</td></tr>
+                    <tr><td>השחרה אוטומטית</td><td>יכולת להסתיר/למחוק מידע רגיש לפני שיתוף או אחסון</td></tr>
+                    <tr><td>תיעוד גישה</td><td>לוג מלא של מי צפה באיזה מסמך, מתי, ומה עשה</td></tr>
+                    <tr><td>שליטה בהרשאות</td><td>הגדרת מי יכול לראות מה</td></tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h4>3.4 אבטחה ושמירת נתונים בישראל</h4>
+                <blockquote>דרישת סף לעבודה עם גופים ממשלתיים</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>מיקום נתונים</td><td>שמירה בישראל בלבד (תשתית פרויקט <strong>נימבוס</strong>)</td></tr>
+                    <tr><td>הצפנה</td><td>הצפנה בתעבורה (TLS) ובאחסון (AES-256)</td></tr>
+                    <tr><td>גיבוי</td><td>גיבוי אוטומטי עם יכולת שחזור</td></tr>
+                    <tr><td>תקנים</td><td>עמידה בדרישות אבטחת מידע ממשלתיות</td></tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h4>3.5 ממשק משתמש בעברית</h4>
+                <blockquote>חוויית משתמש מותאמת</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>שפת ממשק</td><td>עברית מלאה (RTL)</td></tr>
+                    <tr><td>העלאת מסמכים</td><td>גרירה ושחרור, העלאה מרובה</td></tr>
+                    <tr><td>צפייה בתוצאות</td><td>תצוגה של המסמך המקורי לצד הנתונים שחולצו</td></tr>
+                    <tr><td>עריכה ותיקון</td><td>יכולת לתקן שגיאות זיהוי</td></tr>
+                    <tr><td>ייצוא</td><td>הורדת נתונים ב-Excel, CSV, JSON</td></tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h4>3.6 דשבורד בסיסי</h4>
+                <blockquote>מעקב ובקרה</blockquote>
+                <table>
+                    <tr><th>תכונה</th><th>פירוט</th></tr>
+                    <tr><td>סטטיסטיקות</td><td>כמות מסמכים שעובדו, אחוזי הצלחה</td></tr>
+                    <tr><td>מעקב סטטוס</td><td>סטטוס עיבוד בזמן אמת</td></tr>
+                    <tr><td>שגיאות</td><td>זיהוי מסמכים שדורשים התערבות ידנית</td></tr>
+                    <tr><td>דוחות</td><td>ייצוא נתונים בסיסי</td></tr>
+                </table>
+            </div>
+
+            <hr>
+
+            <h3>יכולות מתקדמות (פיתוח עתידי)</h3>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🔜 זיהוי כתב יד בעברית</h4>
+                    <p><em>יכולת ייחודית</em></p>
+                    <ul>
+                        <li>סוגי כתב יד: שדות קצרים (שמות, תאריכים), הערות, חתימות</li>
+                        <li>רמת דיוק יעד: 85%+ (גרסה ראשונה), 95%+ (גרסה מתקדמת)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔜 אינטגרציה למערכות ממשלתיות</h4>
+                    <ul>
+                        <li>מערכות יעד: מרכבה (ERP ממשלתי), מערכות משרדיות פנימיות</li>
+                        <li>אינטגרציה דו-כיוונית</li>
+                        <li>חיבורים מותאמים לכל לקוח</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔜 דשבורד מתקדם</h4>
+                    <ul>
+                        <li>אנליטיקות: טרנדים לאורך זמן, חיזוי עומסים</li>
+                        <li>השוואות בין מחלקות/סניפים</li>
+                        <li>התראות אוטומטיות</li>
+                        <li>דוחות מותאמים אישית</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔜 עיבוד בכמויות גדולות</h4>
+                    <ul>
+                        <li>עיבוד אלפי/מאות אלפי מסמכים בבת אחת</li>
+                        <li>דיגיטציה של ארכיונים</li>
+                        <li>עיבוד מקבילי מותאם</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h4>🔜 גישה דרך API</h4>
+                    <ul>
+                        <li>קהל יעד: צוותי פיתוח, אינטגרטורים</li>
+                        <li>שליחת מסמך ← קבלת תוצאות מובנות</li>
+                        <li>תיעוד מלא בעברית ואנגלית</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Section 4: Advantages -->
+        <section>
+            <h2>4. היתרונות</h2>
+
+            <h3>4.1 חיסכון משמעותי בזמן ובעלויות</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>מדד</th>
+                        <th>לפני</th>
+                        <th>אחרי</th>
+                        <th>שיפור</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>זמן עיבוד למסמך</td>
+                        <td>15-30 דקות</td>
+                        <td>10-30 שניות</td>
+                        <td><strong>פי 60-100</strong></td>
+                    </tr>
+                    <tr>
+                        <td>שגיאות הקלדה</td>
+                        <td>5-15%</td>
+                        <td>פחות מ-1%</td>
+                        <td><strong>פי 10-15</strong></td>
+                    </tr>
+                    <tr>
+                        <td>עלות עיבוד שנתית (לגוף בינוני)</td>
+                        <td>₪8M</td>
+                        <td>₪800K</td>
+                        <td><strong>חיסכון ₪7M+</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="note">* נצטרך לחקור ולהביא נתונים אמיתיים לצורך מכירה וכו׳</div>
+
+            <h3>4.2 מוצר ישראלי לצרכים ישראליים</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>צורך</th>
+                        <th>GovDoc AI Israel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>טפסים ממשלתיים ישראליים</td><td><span class="check-icon">✅</span> מותאם מראש</td></tr>
+                    <tr><td>תעודת זהות ישראלית</td><td><span class="check-icon">✅</span> זיהוי ווידוא אוטומטי</td></tr>
+                    <tr><td>רגולציה ישראלית (תיקון 13)</td><td><span class="check-icon">✅</span> תמיכה מלאה</td></tr>
+                    <tr><td>ממשק בעברית</td><td><span class="check-icon">✅</span> עברית מלאה</td></tr>
+                    <tr><td>שמירת נתונים בישראל</td><td><span class="check-icon">✅</span> ברירת מחדל</td></tr>
+                    <tr><td>תמיכה בעברית</td><td><span class="check-icon">✅</span> צוות מקומי</td></tr>
+                </tbody>
+            </table>
+
+            <h3>4.3 עמידה ברגולציה מהיום הראשון</h3>
+            <div class="card">
+                <p><strong>תיקון 13 לחוק הגנת הפרטיות (אוגוסט 2025)</strong> דורש:</p>
+                <ul>
+                    <li><span class="check-icon">✅</span> זיהוי מידע אישי — <strong>אנחנו מספקים</strong></li>
+                    <li><span class="check-icon">✅</span> יכולת מחיקה/השחרה — <strong>אנחנו מספקים</strong></li>
+                    <li><span class="check-icon">✅</span> תיעוד גישה — <strong>אנחנו מספקים</strong></li>
+                </ul>
+                <p style="margin-top: 15px; color: #dc2626;"><strong>גופים שלא יעמדו בדרישות צפויים לקנסות של עד ₪100,000 לכל אדם שנפגע.</strong></p>
+            </div>
+
+            <h3>4.4 תמיכה דו-לשונית (עברית + ערבית)</h3>
+            <ul>
+                <li><strong>20% מאוכלוסיית ישראל</strong> דוברי ערבית</li>
+                <li>מסמכים רבים מכילים עברית וערבית יחד</li>
+                <li>אנחנו תומכים בשתי השפות באותה פלטפורמה</li>
+            </ul>
+
+            <h3>4.5 יכולת עתידית ייחודית — כתב יד בעברית</h3>
+            <p>בשלב מתקדם, נציע <strong>זיהוי כתב יד בעברית</strong> — יכולת שאף ספק בעולם לא מציע היום.</p>
+        </section>
+
+        <hr>
+
+        <!-- Section 5: Summary -->
+        <section>
+            <h2>5. סיכום</h2>
+
+            <div class="summary-box">
+                <h3>הבעיה</h3>
+                <p>גופים ממשלתיים בישראל מעבדים מיליוני מסמכים ידנית כל שנה. הפתרונות הגלובליים לא מותאמים לטפסים ישראליים, לא עומדים ברגולציה הישראלית, ולא מאפשרים שמירת נתונים בישראל.</p>
+
+                <h3>הפתרון</h3>
+                <p><strong>GovDoc AI Israel</strong> — פלטפורמה ישראלית חכמה לעיבוד מסמכים:</p>
+                <ul>
+                    <li>זיהוי טקסט בעברית וערבית</li>
+                    <li>חילוץ נתונים מתקדם מטפסים ממשלתיים</li>
+                    <li>עמידה ברגולציה ישראלית (תיקון 13)</li>
+                    <li>שמירת נתונים בישראל</li>
+                    <li>ממשק בעברית</li>
+                </ul>
+
+                <h3>היתרון המרכזי</h3>
+                <p>מוצר שנבנה <strong>מהיסוד עבור השוק הישראלי</strong> — מותאם לטפסים ממשלתיים, לשפה העברית, ולדרישות הרגולציה המקומיות.</p>
+            </div>
+
+            <h3>תכולת MVP</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>יכולת</th>
+                        <th>סטטוס</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>זיהוי טקסט מודפס (עברית + ערבית + אנגלית)</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                    <tr><td>חילוץ נתונים מתקדם מטפסים</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                    <tr><td>זיהוי PII + השחרה + תיעוד גישה</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                    <tr><td>אבטחה + שמירת נתונים בישראל</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                    <tr><td>ממשק משתמש בעברית</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                    <tr><td>דשבורד בסיסי</td><td><span class="badge badge-mvp">✅ MVP</span></td></tr>
+                </tbody>
+            </table>
+
+            <h3>פיצ'רים עתידיים</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>יכולת</th>
+                        <th>סטטוס</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>זיהוי כתב יד בעברית</td><td><span class="badge badge-future">🔜 שלב מתקדם</span></td></tr>
+                    <tr><td>אינטגרציה למערכות ממשלתיות (מרכבה)</td><td><span class="badge badge-future">🔜 שלב מתקדם</span></td></tr>
+                    <tr><td>דשבורד מתקדם</td><td><span class="badge badge-future">🔜 שלב מתקדם</span></td></tr>
+                    <tr><td>עיבוד בכמויות גדולות</td><td><span class="badge badge-future">🔜 שלב מתקדם</span></td></tr>
+                    <tr><td>גישה דרך API</td><td><span class="badge badge-future">🔜 שלב מתקדם</span></td></tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <footer>
+        <p>GovDoc AI Israel &copy; 2024</p>
+    </footer>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#2563eb',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#1d4ed8',
+                lineColor: '#64748b',
+                secondaryColor: '#f1f5f9',
+                tertiaryColor: '#eff6ff'
+            }
+        });
+    </script>
+</body>
+</html>
+</code>
